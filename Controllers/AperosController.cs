@@ -42,7 +42,7 @@ namespace AirVandB.Controllers
                 }
                 else
                 {
-                    resultat = resultat.Where(apero => apero.OrganisateurId == userId);
+                    resultat = resultat.Where(apero => apero.OrganizerId == userId);
                     totalApero = resultat.Count();
                 }               
 

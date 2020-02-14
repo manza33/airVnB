@@ -3,26 +3,26 @@
     ViewData["Title"] = "ProfilUtilisateur";
 }
 
-<div class="row" id="liste-aperos"></div>
+<div class="row" id="list-users"></div>
 
 
 @section Scripts {
     <script>
 
         // On demande données au serveur
-        $.get("/api/Utilisateurs", function (data) {
+        $.get("/api/Users", function (data) {
             //console.log(data);
-            $("#liste-utilisateurs").empty();
+            $("#list-users").empty();
 
-            for (var utilisateur of data) {
+            for (var user of data) {
 
-                $("#liste-aperos").append($(`
+                $("#list-users").append($(`
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img src="/images/avatar/${utilisateur.image}" alt="" />
+                            <img src="/images/avatar/${user.image}" alt="" />
                             <div class="caption text-center">
-                                <h3>${utilisateur.prenom} ${utilisateur.nom}</h3>
-                                <p>${utilisateur.lieu}</p>
+                                <h3>${user.prenom} ${user.nom}</h3>
+                                <p>${user.lieu}</p>
                             </div>
                         </div>
                     </div>

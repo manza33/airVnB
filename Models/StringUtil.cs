@@ -7,14 +7,19 @@ namespace AirVandB.Models
 {
     public class StringUtil
     {
-        public static void VerifierLongueur(string champ, string texte, int min, int max)
+        public static void CheckLength(string field, string text, int min, int max)
         {
-            if (texte.Length <= min || texte.Length > max)
+            if (!IsValidLength(field, text, min, max))
             {
                 throw new ArgumentException(
-                    $"La longueur de '{champ}' doit être compris entre {min} et {max} caractères"
+                    $"La longueur de '{field}' doit être compris entre {min} et {max} caractères"
                 );
             }
+        }
+
+        public static bool IsValidLength(string field, string text, int min, int max)
+        {
+            return text.Length > min && text.Length < max;
         }
     }
 }

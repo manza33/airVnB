@@ -87,7 +87,7 @@
 
             for (var apero of data) {
 
-                let invites = apero.estComplet ?
+                let invites = apero.isFull ?
                     '<a href="#" class="btn btn-primary disabled" role="button">Complet</a>'
                     : '<a href="#" class="btn btn-primary" role="button">S\'inviter</a>';
 
@@ -99,16 +99,16 @@
                                 <img src="/images/photos/${apero.image}" alt="${apero.altImage}" class = "img-overflow" />
 
                                 <div class="caption">
-                                    <h3>${apero.titre}</h3>
+                                    <h3>${apero.title}</h3>
                                     <p>${apero.description}</p>
                                     <p>
                                         Organisé par :
-                                        <img src="/images/avatar/${apero.organisateurImage}" alt="" width = 50px />
-                                        ${apero.organisateurNom}   
+                                        <img src="/images/avatar/${apero.OrganizerImage}" alt="" width = 50px />
+                                        ${apero.OrganizerName}   
                                     </p>
                                     <div class="infoSup">
-                                        <p>Participation : ${apero.participation} €</p>
-                                        <p>Nombre de participants : ${apero.nbInvites} / ${apero.nbInvitesMax}</p>
+                                        <p>Participation : ${apero.price} €</p>
+                                        <p>Nombre de participants : ${apero.guestNumber} / ${apero.maxGestNumber}</p>
                                     </div>
                                     <div class="boutons">
                                         <p>

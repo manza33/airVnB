@@ -71,6 +71,10 @@ namespace AirVandB.Controllers
             {
                 return BadRequest("Unexpected user id");
             }
+            if (!newUser.IsValid)
+            {
+                return BadRequest("Invalid user data");
+            }
 
             DataContext.Instance.Save(newUser);
             var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{newUser.Id}");
@@ -91,7 +95,12 @@ namespace AirVandB.Controllers
                 return BadRequest("Inconsistent user id");
             }
 
-            //newUser.Id = id;
+            if (!user.IsValid)
+            {
+                return BadRequest("Invalid user data");
+            }
+
+            //user.Id = id;
 
             DataContext.Instance.Save(user, id);
             var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{user.Id}");

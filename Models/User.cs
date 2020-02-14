@@ -21,16 +21,11 @@ namespace AirVandB.Models
         public User(int? id, string firstname, string lastname, string image, string lieu)
         {
 
-            PhotoUtil.VerifierChemin(image);
-            StringUtil.VerifierLongueur(nameof(firstname), firstname, LongueurMinChamp, LongueurMaxChamp);
-            StringUtil.VerifierLongueur(nameof(lastname), lastname, LongueurMinChamp, LongueurMaxChamp);
-            StringUtil.VerifierLongueur(nameof(lieu), lieu, LongueurMinChamp, LongueurMaxChamp);
-
             Id = id;
             Firstname = firstname;
-            LastName = lastname;
+            Lastname = lastname;
             Image = image;
-            Lieu = lieu;
+            City = lieu;
         }
 
         public void InitWithUniqueId(IEnumerable<User> allUsers)
@@ -38,11 +33,22 @@ namespace AirVandB.Models
             Id = allUsers.Max(u => u.Id) + 1;
         }
 
+        public bool IsValid
+        {
+            get
+            {
+                return PhotoUtil.IsValidePath(Image)
+                && StringUtil.IsValidLength(nameof(Firstname), Firstname, LongueurMinChamp, LongueurMaxChamp)
+                && StringUtil.IsValidLength(nameof(Lastname), Lastname, LongueurMinChamp, LongueurMaxChamp)
+                && StringUtil.IsValidLength(nameof(City), City, LongueurMinChamp, LongueurMaxChamp);
+            }
+        }
+
         public int? Id { get; private set; }
         public string Firstname { get; private set; }
-        public string LastName { get; private set; }
+        public string Lastname { get; private set; }
         public string Image { get; private set; }
-        public string Lieu { get; private set; }        
+        public string City { get; private set; }        
 
     }
 }

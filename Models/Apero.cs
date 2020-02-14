@@ -49,10 +49,10 @@ namespace AirVandB.Models
                 throw new ArgumentException("La participation doit être positive ou eqal à 0");
             }
 
-            PhotoUtil.VerifierChemin(image);
-            StringUtil.VerifierLongueur(nameof(titre), titre, LongueurMinChamp, LongueurMaxChamp);
-            StringUtil.VerifierLongueur(nameof(altImage), altImage, LongueurMinChamp, LongueurMaxChamp);
-            StringUtil.VerifierLongueur(nameof(description), description, LongueurMinChamp, 250);
+            PhotoUtil.CheckPath(image);
+            StringUtil.CheckLength(nameof(titre), titre, LongueurMinChamp, LongueurMaxChamp);
+            StringUtil.CheckLength(nameof(altImage), altImage, LongueurMinChamp, LongueurMaxChamp);
+            StringUtil.CheckLength(nameof(description), description, LongueurMinChamp, 250);
 
             if (organisateur == null)
             {
@@ -60,38 +60,38 @@ namespace AirVandB.Models
             }
 
             Id = ++nextId; // Incrémentation
-            Titre = titre;
+            Title = titre;
             Image = image;
             Description = description;
             AltImage = altImage;
-            NbInvites = nbInvites;
-            NbInvitesMax = nbInvitesMax;
-            Participation = participation;
-            Organisateur = organisateur;
+            GuestNumber = nbInvites;
+            MaxGuestNumber = nbInvitesMax;
+            Price = participation;
+            Organizer = organisateur;
         }
 
         public int Id { get; private set; }
-        public string Titre { get; private set; }
+        public string Title { get; private set; }
         public string Image { get; private set; }
         public string Description { get; private set; }
         public string AltImage { get; private set; }
-        public int NbInvites { get; private set; }
-        public int NbInvitesMax { get; private set; }
-        public decimal  Participation{ get; private set; }
+        public int GuestNumber { get; private set; }
+        public int MaxGuestNumber { get; private set; }
+        public decimal Price { get; private set; }
 
-        public int OrganisateurId => Organisateur.Id.Value;
-        public string OrganisateurNom => $"{Organisateur.Firstname} {Organisateur.LastName}";
-        public string OrganisateurImage => Organisateur.Image;
+        public int OrganizerId => Organizer.Id.Value;
+        public string OrganizerName => $"{Organizer.Firstname} {Organizer.Lastname}";
+        public string OrganizerImage => Organizer.Image;
 
         [JsonIgnore]
-        public User Organisateur { get; private set; }
+        public User Organizer { get; private set; }
 
         private static int nextId = 0;
 
-        public bool EstComplet // ou => NbInvites == NbInvitesMax;
+        public bool IsFull // ou => NbInvites == NbInvitesMax;
         { 
             get {
-                return NbInvites == NbInvitesMax;
+                return GuestNumber == MaxGuestNumber;
             }
         }
 

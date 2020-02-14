@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,9 +46,17 @@ namespace AirVandB.Models
         }
 
         public int? Id { get; private set; }
+        
+        [StringLength(50, MinimumLength = 2, ErrorMessage ="Firstname size must be between 2 and 50")]
         public string Firstname { get; private set; }
+        
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Lastname size must be between 2 and 50")]
         public string Lastname { get; private set; }
+
+        [RegularExpression(@"[-_A-Za-z0-9]+\.(jpg|jpeg|png|gif)", ErrorMessage ="Bag image format")] // @pour faciliter caractères spéciaux... le \ n'est plus caractère spécial
         public string Image { get; private set; }
+
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "City size must be between 2 and 50")]
         public string City { get; private set; }        
 
     }

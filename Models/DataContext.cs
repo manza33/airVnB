@@ -60,6 +60,18 @@ namespace AirVandB.Models
         public int aperoCount => _aperos.Count;
         public int userCount => _user.Count;
 
+        private int FindUserIndex(int id)
+        {
+            int indice = _user.FindIndex(myUser => myUser.Id == id);
+
+            if (indice < 0)
+            {
+                throw new ArgumentException("User no longer exist");
+            }
+
+            return indice;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -79,14 +91,8 @@ namespace AirVandB.Models
                 //    }
                 //}
                 #endregion
-
-                int indice = _user.FindIndex(myUser => myUser.Id == user.Id);
                 
-                if(indice < 0)
-                {
-                    throw new ArgumentException("User no longer exist");
-                }
-                _user[indice] = user;
+                _user[FindUserIndex(id.Value)] = user;
 
             }
             else
@@ -97,7 +103,16 @@ namespace AirVandB.Models
             }
         }    
 
+
         private const string dictionnaire = "apéritif,amuse-bouche,amuse-gueule,boisson apéritive, anchois, bande organisée,barbecue,basilic,biscuits,boire,Bon appétit, bretzel, cerises, chips, chorizo, convivial, copains, copieux, desserts, digestif, dînatoire, dîner, été, fêter, fromage, gâteaux, glaçons, grignoter, kir, muscat, olives, pastis, pinard, recette, Ricard, salés, sangria, sauciflard, saucisson, tapas, terrasse, tomates, trinquer, vendredi soir,verres,verrines,vin,whisky, Noël,anniversaire,pâque,célébration,festivité,Pentecôte,Toussaint,cérémonie,festin,réjouissance,kermesse,Saint-Valentin,solennité,soirée,bal,Halloween,bamboula,commémoration,foire,jubilé,Saint-Jean,gala,assomption,carnaval,Nativité,orgie,ducasse,Épiphanie,festival,fiesta,célébrant,célébrer,banquet,danse,fêtard,bringue,confetti,évènement,forain,party,noce,procession,Saint-Jean-Baptiste,bacchanale,teuf,avent,cadeau,divertissement,Pâques,rave,beuverie,centenaire,réveillon,surboum,calendrier,jour férié, festive, solstice, week-end,cocagne,guinguette,nouvel an, boum, liesse, Pourim, Aïd, bombe, fête nationale,honneur,inauguration,moisson,Java,occasion,raout,repas,spectacle,invité,solennelle,Thanksgiving,frairie,soir,Bacchus,célèbre,chouille,nouba,redoute,ribote,ribouldingue,surprise-partie,annuelle,chrétienne,grand-messe,pavoiser,animation,bombance,ivresse,fête des mères,hymne,Kippour,programme,somptueuse,toast,traditionnelle,joie,cavalcade,effervescence,féria,korité,mardi gras, mariage, populaire, ramadan, régal, rite, sauterie, convier, déguisement, friandise, grandiose, jubilaire, lupercales, Samain, saturnales, assemblée, dansant, danser, Fête-Dieu,folklorique,foule,joyeuse,mascarade,Pessa'h,plaisir,réunion,Souccot,veille,allégresse,battre son plein,équinoxe,minuit,nuit,organiser,païenne,panathénées,comité,convivialité,feux d'artifice,fiançailles,préparatifs,sabbat,veillée,guindaille,illumination,Oktoberfest,sacrifice,temps des fêtes,teufeur,vacance,vendange,agape,Aïd el-Kebir,amusement,apparat,Bacchante,bal musette, baloche, bamboche, Beltaine, boume, clubeur, congé, coutume, débauche, délice, détente, distraction, enchantement, épluchette, fête des pères, flonflon, free-party,garden-party,gueuleton,jubilation,pendaison de crémaillère,pessah,pince-fesses,rapta,rassembler,rave-party,réception,récréation,reinage,relâche,ripaille,surboume,surpatte,surprise-party,teufer,veglione,vogue";
+
+        internal void RemoveUser(int? id)
+        {            
+                         
+                _user.RemoveAt(FindUserIndex(id.Value));
+      
+        }
+
         private const string listLastnames = "Martin,Bernard,Thomas,Petit,Robert,Richard,Durand,Dubois,Moreau,Laurent,Simon,Michel,Lefebvre,Leroy,Roux,David,Bertrand,Morel,Fournier,Girard,Bonnet,Dupont,Lambert,Fontaine,Rousseau,Vincent,Muller,Lefevre,Faure,Andre,Mercier,Blanc,Guerin,Boyer,Garnier,Chevalier,Francois,Legrand,Gauthier,Garcia,Perrin,Robin,Clement,Morin,Nicolas,Henry,Roussel,Mathieu,Gautier,Masson,Marchand,Duval,Denis,Dumont,Marie,Lemaire,Noel,Meyer,Dufour,Meunier,Brun,Blanchard,Giraud,Joly,Riviere,Lucas,Brunet,Gaillard,Barbier,Arnaud,Martinez,Gerard,Roche,Renard,Schmitt,Roy,Leroux,Colin,Vidal,Caron,Picard,Roger,Fabre,Aubert,Lemoine,Renaud,Dumas,Lacroix,Olivier,Philippe,Bourgeois,Pierre,Benoit,Rey,Leclerc,Payet,Rolland,Leclercq,Guillaume,Lecomte,Lopez,Jean,Dupuy,Guillot,Hubert,Berger,Carpentier,Sanchez,Dupuis,Moulin,Louis,Deschamps,Huet,Vasseur,Perez,Boucher,Fleury,Royer,Klein,Jacquet,Adam,Paris,Poirier,Marty,Aubry,Guyot,Carre,Charles,Renault,Charpentier,Menard,Maillard,Baron,Bertin,Bailly,Herve,Schneider,Fernandez,Le Gall,Collet,Leger,Bouvier,Julien,Prevost,Millet,Perrot,Daniel,Le Roux,Cousin,Germain,Breton,Besson,Langlois,Remy,Le Goff,Pelletier,Leveque,Perrier,Leblanc,Barre,Lebrun,Marchal,Weber,Mallet,Hamon,Boulanger,Jacob,Monnier,Michaud,Rodriguez,Guichard,Gillet,Etienne,Grondin,Poulain,Tessier,Chevallier,Collin,Chauvin,Da Silva,Bouchet,Gay,Lemaitre,Benard,Marechal,Humbert,Reynaud,Antoine,Hoarau,Perret,Barthelemy,Cordier,Pichon,Lejeune,Gilbert,Lamy,Delaunay,Pasquier,Carlier,Laporte";
         private const string listFirstnames = "Emma,Louise,Jade,Alice,Chloé,Lina,Léa,Manon,Mila,Lola,Camille,Anna,Rose,Inès,Léna,Ambre,Zoé,Julia,Juliette,Sarah,Lucie,Jeanne,Lou,Romane,Eva,Mia,Nina,Agathe,Louna,Charlotte,Inaya,Léonie,Clara,Margaux,Sofia,Lilou,Lana,Clémence,Olivia,Maëlys,Adèle,Luna,Anaïs,Victoria,Margot,Elena,Mathilde,Léana,Capucine,Aya,Giulia,Alicia,Elsa,Louane,Romy,Yasmine,Elise,Nour,Victoire,Lya,Mya,Lily,Lisa,Iris,Assia,Théa,Emy,Noémie,Marie,Lise,Apolline,Gabrielle,Charlie,Lyna,Alix,Valentine,Ines,Pauline,Soline,Faustine,Célia,Mélina,Maya,Roxane,Océane,Elisa,Sara,Héloïse,Laura,Emmy,Zélie,Thaïs,Salomé,Maria,Lila,Candice,Constance,Justine,Livia,Maëlle,Gabriel,Louis,Jules,Lucas,Raphaël,Adam,Léo,Hugo,Ethan,Arthur,Nathan,Liam,Paul,Maël,Sacha,Nolan,Tom,Noah,Gabin,Enzo,Mohamed,Timéo,Théo,Mathis,Aaron,Axel,Victor,Martin,Antoine,Noé,Clément,Baptiste,Valentin,Maxime,Robin,Eden,Rayan,Marius,Yanis,Maxence,Samuel,Evan,Thomas,Léon,Alexandre,Mathéo,Augustin,Tiago,Simon,Eliott,Gaspard,Lenny,Naël,Nino,Isaac,Amir,Lyam,Alexis,Malo,Ibrahim,Imran,Camille,Kaïs,Noa,Lorenzo,Marceau,Noam,Mathys,Oscar,Esteban,Kylian,Ilyes,Adrien,Youssef,Ayoub,Ayden,Soan,Benjamin,Milo,Amine,William,Kenzo,Antonin,Joseph,Diego,Côme,Sohan,Louka,Jean,Wassim,Ismaël,Naïm,Milan,Adem,David,Owen,Noham,Léandre,Ali,Rafael";
         private const string listCities = "Bordeaux,Bordeaux,Bordeaux,Bordeaux,Talence,Pessac,Blanquefort,Arcachon,Villenave,Lormont,Cenon,Le Bouscat,Merignac,Cestas";

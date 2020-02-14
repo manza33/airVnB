@@ -71,9 +71,10 @@ namespace AirVandB.Controllers
             {
                 return BadRequest("Unexpected user id");
             }
-            if (!newUser.IsValid)
+            if (!ModelState.IsValid) //if (!newUser.IsValid)
             {
-                return BadRequest("Invalid user data");
+                
+                return BadRequest(ModelState);
             }
 
             DataContext.Instance.Save(newUser);
@@ -85,6 +86,9 @@ namespace AirVandB.Controllers
         [HttpPut("{id}")]
         public ActionResult<User> Put(int id, [FromBody]User user)
         {
+            
+
+
             if (user == null)
             {
                 return BadRequest("No user provided");
@@ -95,23 +99,37 @@ namespace AirVandB.Controllers
                 return BadRequest("Inconsistent user id");
             }
 
-            if (!user.IsValid)
+            if (!ModelState.IsValid) //if (!user.IsValid)
             {
                 return BadRequest("Invalid user data");
             }
 
             //user.Id = id;
 
-            DataContext.Instance.Save(user, id);
-            var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{user.Id}");
-            return (user);
+            try {
+                DataContext.Instance.Save(user, id);
+                return Ok(user);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound("Unknown user");
+            }
            
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            try
+            {
+                DataContext.Instance.RemoveUser(id);
+                return NoContent();
+            }
+            catch (ArgumentException)
+            {
+                return NotFound("Unknown user");
+            }
         }
     }
 }

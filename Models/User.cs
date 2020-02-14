@@ -33,11 +33,6 @@ namespace AirVandB.Models
             Lieu = lieu;
         }
 
-        public void NouvelInscrit()
-        {
-            Id = null;
-        } 
-        
         public void InitWithUniqueId(IEnumerable<User> allUsers)
         {
             Id = allUsers.Max(u => u.Id) + 1;

@@ -79,8 +79,24 @@ namespace AirVandB.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public ActionResult<User> Put(int id, [FromBody]User user)
         {
+            if (user == null)
+            {
+                return BadRequest("No user provided");
+            }
+
+            if (!user.Id.HasValue || id != user.Id.Value)
+            {
+                return BadRequest("Inconsistent user id");
+            }
+
+            //newUser.Id = id;
+
+            DataContext.Instance.Save(user, id);
+            var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{user.Id}");
+            return (user);
+           
         }
 
         // DELETE api/<controller>/5

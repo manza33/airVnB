@@ -64,10 +64,10 @@ namespace AirVandB.Models
         /// 
         /// </summary>
         /// <param name="user"></param>
-        public void Save(User user)
+        public void Save(User user, int? id=null)
         {
-            // TODO : Valider les données
-            if (user.Id.HasValue)
+            if (id.HasValue)
+            //if (user.Id.HasValue)
             {
                 #region boucleFor
                 //for (int i = 0; i < _utilisateur.Count(); i++)
@@ -81,6 +81,7 @@ namespace AirVandB.Models
                 #endregion
 
                 int indice = _user.FindIndex(myUser => myUser.Id == user.Id);
+                
                 if(indice < 0)
                 {
                     throw new ArgumentException("User no longer exist");

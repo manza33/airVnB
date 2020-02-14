@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "ProfilUtilisateur";
+}
+
+<div class="row" id="liste-aperos"></div>
+
+
+@section Scripts {
+    <script>
+
+        // On demande données au serveur
+        $.get("/api/Utilisateurs", function (data) {
+            //console.log(data);
+            $("#liste-utilisateurs").empty();
+
+            for (var utilisateur of data) {
+
+                $("#liste-aperos").append($(`
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="/images/avatar/${utilisateur.image}" alt="" />
+                            <div class="caption text-center">
+                                <h3>${utilisateur.prenom} ${utilisateur.nom}</h3>
+                                <p>${utilisateur.lieu}</p>
+                            </div>
+                        </div>
+                    </div>
+                `));
+            }
+
+        });
+
+
+    </script>
+}
